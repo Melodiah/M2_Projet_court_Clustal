@@ -1,6 +1,9 @@
 import numpy as np
 import profil
 
+"""
+Module utilisé pour l'alignement de séquences, contenant différentes fonctions d'alignement global ou multiple ainsi qu'une écriture de fichier de sortie.
+"""
 ##################################
 # Fonction d'alignement pairwise #
 ##################################
@@ -73,7 +76,8 @@ def needleman_wunsch_profiles(prof1, prof2, score_fn, gap_open=15, gap_extend=6)
     score_fn : fonction de score caractère-caractère
     gap_open, gap_extend : pénalités de gap
     
-    return : alignement prof1, alignement prof2 (list de colonnes alignées)
+    return : 
+        alignement prof1, alignement prof2 (list de colonnes alignées)
     """
     n, m = len(prof1), len(prof2)
     INF = float("inf")
@@ -136,8 +140,15 @@ def needleman_wunsch_profiles(prof1, prof2, score_fn, gap_open=15, gap_extend=6)
 def progressive_align_from_tree(node, sequences, score_fn, gap_open=15, gap_extend=6, alphabet="ACGT-"):
     """
     Alignement progressif basé sur un arbre guide.
+    
     node : noeud de l'arbre (scipy to_tree)
     sequences : list[SeqRecord]
+    score_fn : fonction de score caractère-caractère
+    gap_open, gap_extend : pénalités de gap
+
+    return : 
+        msa (list of str) : Alignement multiple 
+        ids (list of str) total des identifiants de séquences
     """
     if node.is_leaf():
         return [str(sequences[node.id].seq)], [sequences[node.id].id]
@@ -160,18 +171,10 @@ def write_clustal(msa, ids, filename, protein, width=60):
     """
     Écrit un alignement multiple au format Clustal .aln
 
-    Paramètres
-    ----------
-    msa : list of str
-        Alignement multiple (séquences alignées avec gaps).
-    ids : list of str
-        Identifiants des séquences.
-    filename : str
-        Nom du fichier de sortie.
-    width : int
-        Largeur des blocs (par défaut 60).
-    protein : bool
-        Si True, utilise une table de conservation protéique.
+    msa (list of str) : Alignement multiple 
+    ids (list of str) Identifiants des séquences.
+    Nom du fichier de sortie.
+    protein ( boolean ) : Si True, utilise une table de conservation protéique.
     """
     n = len(msa)
     L = len(msa[0])
@@ -207,4 +210,5 @@ def write_clustal(msa, ids, filename, protein, width=60):
 
             # Ligne de consensus
             consensus = "".join(consensus_column(c) for c in range(start, end))
+
             f.write(" " * 16 + consensus + "\n\n")
