@@ -1,5 +1,5 @@
 """
-Module utilisé pour la définition, le calcul et l'édition de matrices de scores 
+Module utilisé pour la définition, l'édition de matrices de scores 
 dans le cadre d'un alignement de séquences.
 """
 
@@ -41,4 +41,5 @@ def protein_score(a: str, b: str, matrix):
     if pair not in matrix:
         pair = (b, a)
     return matrix.get(pair, -4)  # -4 si la paire n'existe pas
+
 
