@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 from io import StringIO
 import numpy as np
 
+"""
+Module servant à la création et la sauvegarde d'arbre guide par la méthode UPGMA
+dans le cadre d'un alignement multiples de séquences.
+"""
 ################################
 # Création d'un arbre guide   #
 ################################
@@ -12,8 +16,14 @@ import numpy as np
 def build_tree(sequences, gap_open, gap_extend, score_fn, alphabet, protein=False):
     """
     Construit un arbre guide à partir des alignements pairwise.
+    
+    sequences : str -> séquences à aligner
+    score_fn : fonction de score caractère-caractère
+    gap_open, gap_extend : pénalités de gap
+    protein ( boolean ) : Si True, utilise une table de conservation protéique.
 
-    Amélioration : normalisation des scores en distances [0,1].
+    return : 
+        Un arbre guide créer par méthode UPGMA
     """
     n = len(sequences)
     matrix = np.zeros((n, n))
@@ -55,6 +65,9 @@ def build_tree(sequences, gap_open, gap_extend, score_fn, alphabet, protein=Fals
     return root_node, Z
 
 def linkage_to_newick(Z, labels):
+    """
+    Fonction formant un dendrogrammes à partir d'un arbre guide.
+    """
     root_node, nodes = to_tree(Z, rd=True)
 
     def build_newick(node, newick, parentdist, leaf_names):
@@ -73,9 +86,13 @@ def linkage_to_newick(Z, labels):
     return build_newick(root_node, "", root_node.dist, labels)
 
 def export_tree_png_biopython(newick_str, filename):
+    """
+    Création d'un fichier png contenant l'image mise en paramètres
+    """
     handle = StringIO(newick_str)
     tree = Phylo.read(handle, "newick")
     fig, ax = plt.subplots(figsize=(8, 6))
     Phylo.draw(tree, axes=ax, do_show=False)
     fig.savefig(filename, dpi=300)
+
     plt.close(fig)
