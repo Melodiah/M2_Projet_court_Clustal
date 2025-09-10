@@ -84,6 +84,7 @@ if __name__ == "__main__":
     # écriture des résultats #
     ##########################
 
+    os.makedirs(output, exist_ok=True)
 
     with open(os.path.join(output ,"msa.fasta"), "w") as f:
         for sid, aligned_seq in zip([record.id for record in Seq], msa):
@@ -97,4 +98,5 @@ if __name__ == "__main__":
         f.write(newick_str + "\n")
 
     tree.export_tree_png_biopython(newick_str, os.path.join(output, "arbre.png"))
+
     alignement.write_clustal(msa, ids, os.path.join(output, "alignment.aln"), protein=protein)
