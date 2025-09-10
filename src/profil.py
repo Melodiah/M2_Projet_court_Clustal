@@ -1,5 +1,7 @@
 from collections import Counter, defaultdict
-
+"""
+Module utilisé pour la création, la fusion et l'édition de profils de séquences dans le cadre d'un alignement multiples.
+"""
 ###############################
 # Créations des profils MSA   #
 ###############################
@@ -92,5 +94,6 @@ def merge_profiles(aln1, msa1, aln2, msa2):
     # --- 4. Vérification ---
     L = len(new_msa[0])
     assert all(len(seq) == L for seq in new_msa), "Erreur : longueurs incohérentes"
+
 
     return new_profile, new_msa
