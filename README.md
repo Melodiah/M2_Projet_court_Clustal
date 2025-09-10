@@ -15,7 +15,7 @@ The program can be run using two different modes:
 Clone the repository:
 
 ```bash
-git clone https://github.com/Melodiah/M2_projet_Clustal
+git clone https://github.com/Melodiah/M2_projet_court_Clustal
 ```
 
 Install dependencies with UV : 
