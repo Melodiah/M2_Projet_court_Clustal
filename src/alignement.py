@@ -97,7 +97,6 @@ def needleman_wunsch_profiles(prof1, prof2, score_fn, gap_open=15, gap_extend=6)
     # Remplissage
     print("Alignement sur ",n, " bases")
     for i in range(1, n+1):
-        print(f"Alignement base {i}/{n}")
         for j in range(1, m+1):
             s = profil.score_columns(prof1[i-1], prof2[j-1], score_fn)
             choices = [M[i-1,j-1]+s, X[i-1,j-1]+s, Y[i-1,j-1]+s]
@@ -212,3 +211,4 @@ def write_clustal(msa, ids, filename, protein, width=60):
             consensus = "".join(consensus_column(c) for c in range(start, end))
 
             f.write(" " * 16 + consensus + "\n\n")
+
